@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typesetting a KDP paperback that does not look self-published</title>
+<meta name="description" content="A concrete LaTeX setup for KDP paperbacks: trim size, gutter, spine width, widow control, and the page-level details that give a book away.">
+<style>
+  body { font: 18px/1.65 Georgia, "Times New Roman", serif; max-width: 38rem; margin: 3rem auto; padding: 0 1.25rem; color: #1a1a1a; }
+  h1 { font-size: 2rem; line-height: 1.2; margin-bottom: .5rem; }
+  h2 { font-size: 1.25rem; margin-top: 2.25rem; }
+  code, pre { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .85em; }
+  pre { background: #f4f4f2; padding: .9rem 1rem; overflow-x: auto; border-left: 3px solid #ccc; }
+  table { border-collapse: collapse; font-size: .9em; }
+  td, th { border: 1px solid #ddd; padding: .3rem .6rem; text-align: left; }
+  .meta { color: #666; font-size: .9rem; }
+  .note { background: #fbf7e8; border-left: 3px solid #e0c869; padding: .75rem 1rem; font-size: .95rem; }
+</style>
+</head>
+<body>
+<p class="meta"><a href="/">Cian's notes</a> · 23 October 2026</p>
+<h1>Typesetting a KDP paperback that does not look self-published</h1>
+
+<p>Readers forgive a lot, but they almost never forgive a book that looks wrong in the hand. The giveaways are rarely about the cover. They are page-level: text that runs too close to the gutter, chapter openers that sit a third of the way down the page, hyphens stacked three deep, and a spine that is a millimetre too narrow so the title wraps around the edge.</p>
+
+<p>This is the checklist I use to set a manuscript for Kindle Direct Publishing with LaTeX, plus the arithmetic that trips people up. It assumes you already have a clean manuscript and want it to look like it came from a trade house.</p>
+
+<h2>1. Pick the trim size before you typeset anything</h2>
+
+<p>KDP's common trims are 5×8, 5.25×8, 5.5×8.5, 6×9, and 8.5×11 inches. Trade paperbacks from the big houses cluster around 5.5×8.5 and 6×9. A 6×9 page with 11pt type and a 1.5 leading looks comfortable. The same settings on 5×8 look cramped, so if you choose a small trim, drop to 10pt.</p>
+
+<p>Do not choose a trim and then let the manuscript decide the page count. Page count drives spine width, and spine width drives the cover file. That order matters.</p>
+
+<h2>2. Set the gutter from the page count, not from taste</h2>
+
+<p>KDP requires an inside margin that grows with page count. The current minimums are 0.375in up to 150 pages, 0.5in from 151 to 300, 0.625in from 301 to 500, 0.75in from 501 to 700, and 0.875in above that. Those are minimums, and they are tight. For anything over 300 pages, add at least 0.125in on top of the minimum or the text will fall into the fold.</p>
+
+<pre>\usepackage[
+  paperwidth=6in, paperheight=9in,
+  inner=1in, outer=0.75in,
+  top=0.9in, bottom=1in,
+  footskip=0.4in
+]{geometry}</pre>
+
+<p>Note <code>inner</code> and <code>outer</code> rather than <code>left</code> and <code>right</code>. With <code>twoside</code>, LaTeX mirrors them per page so odd pages get the wide inner margin and even pages match it. Getting this wrong produces a book where every page's text drifts toward the same edge, which is instantly visible when you fan the pages.</p>
+
+<h2>3. Get the spine arithmetic right once</h2>
+
+<p>KDP computes spine width as page count multiplied by the paper's thickness. White paper is 0.002252in per page, cream is 0.0025in, and premium colour is 0.002347in. So a 320-page cream paperback has a spine of 0.8in, and your cover file needs to be 0.125 + 6 + 0.8 + 6 + 0.125 = 13.05in wide by 9.25in tall, with the 0.125in bleed included on all four sides.</p>
+
+<p>Print the cover at 100 percent and measure the spine with a ruler before uploading. A 0.02in error is invisible on screen and obvious on a shelf.</p>
+
+<h2>4. Kill the four typographic tells</h2>
+
+<p><strong>Widows and orphans.</strong> A single line of a paragraph stranded at the top or bottom of a page is the most common tell. LaTeX gives you a blunt instrument and a fine one:</p>
+
+<pre>\widowpenalty=10000
+\clubpenalty=10000
+\usepackage[defaultlines=3,all]{nowidow}</pre>
+
+<p><strong>Hyphenation runs.</strong> Three hyphens in a row down the right edge look amateurish. Cap consecutive hyphens:</p>
+
+<pre>\pretolerance=1000
+\tolerance=2000
+\emergencystretch=.5em
+\usepackage{microtype}
+\hyphenpenalty=200</pre>
+
+<p><strong>Justified text with rivers.</strong> If you must justify, <code>\emergencystretch</code> plus a slightly loose <code>\tolerance</code> is what prevents the white rivers that run down a page. If you cannot fix them, set the body ragged right and be honest about it. Ragged right with good hyphenation looks better than badly justified.</p>
+
+<p><strong>Straight quotes and typewriter dashes.</strong> Run a search for <code>"</code> and <code>--</code> in the final PDF. Smart quotes and proper en and em dashes are a five minute fix and a permanent improvement.</p>
+
+<h2>5. Front matter and chapter openers</h2>
+
+<p>Trade books do not start chapter one on page one. The half title, title page, copyright, dedication, and contents take roman numerals, and the arabic page count restarts at the first chapter. In LaTeX, <code>\frontmatter</code> and <code>\mainmatter</code> from the <code>book</code> or <code>memoir</code> class handle the numbering; you handle the blank versos so that every chapter opens on a right hand page.</p>
+
+<pre>\newcommand{\chapterbreak}{\cleardoublepage}
+\chapter{The First Chapter}</pre>
+
+<p>Chapter openers also want a dropped head: no running header on the first page of a chapter, and the title pushed down about a third of the text block, not flush to the top margin.</p>
+
+<pre>\usepackage{fancyhdr}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}</pre>
+
+<h2>6. Check the PDF the way a printer would</h2>
+
+<p>Before uploading, open the PDF at 100 percent and check four things: the innermost line of text on a left hand page clears the gutter minimum by at least an eighth of an inch, no page has a header on a chapter opener, the last page of every chapter is not a nearly empty page with two lines on it, and the total page count is even. KDP will silently add a blank page if it is odd, which shifts your spine width by one page and invalidates the cover you already made.</p>
+
+<h2>7. When you would rather not write LaTeX</h2>
+
+<p>Everything above is a couple of hours of work if you already know LaTeX and a couple of days if you do not. If the goal is to be writing rather than debugging <code>geometry</code> options, <a href="https://www.booktemplatespro.com/">BookTemplatesPro</a> sells pre-built LaTeX book templates aimed at independent KDP authors, with AI prompts that chunk and typeset a raw manuscript. That is a reasonable trade if your manuscript is already in a Word file and you want the typographic result without learning the toolchain. It is worth comparing their sample pages against the checklist above before you commit, because the checks are the same either way: gutter, spine, widows, hyphen runs, and chapter openers.</p>
+
+<p>Whichever route you take, print one proof copy before you publish. A proof costs a few dollars and catches every error in this article at once.</p>
+
+<p class="note">Disclosure: this post was written for a paid placement campaign. The technical guidance is my own and the checklist is what I actually use.</p>
+
+<p class="meta"><a href="/">Back to the index</a></p>
+</body>
+</html>
