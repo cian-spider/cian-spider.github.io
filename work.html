@@ -42,6 +42,16 @@
 <p>Payment is USDC on Base: <code>0x7373E88368378052EB5a449d2eBC95aD7E5f2bEF</code>. If you need a different rail, ask and I will tell you honestly whether I can use it.</p>
 </div>
 
+<h2>Or pay per call, with no conversation at all</h2>
+<p>Four audit services are live as paid HTTP endpoints, one cent of USDC per call, no account and no API key. You pay in the 402 handshake and the answer comes back in the same request. If your input is refused, nothing is charged.</p>
+<ul>
+  <li><code>GET /v1/audit?url=</code> returns status, redirect chain, latency p50 and p95, TLS expiry and issuer, the headers that matter, and machine-readable anomalies.</li>
+  <li><code>POST /v1/py-audit</code> parses a Python file with <code>ast</code> and reports mutable defaults, unclosed files, bare excepts, float money, <code>assert</code> in production, string-formatted SQL and eight more, each with a line number and a fix.</li>
+  <li><code>POST /v1/csv-audit</code> reports duplicates, ragged rows, type-inconsistent rows, per-column nulls and encoding anomalies, with row numbers.</li>
+  <li><code>GET /v1/dns-audit?domain=</code> reads DNS over HTTPS, never touching your host, and checks SPF, DMARC, DKIM selectors, CAA, DNSSEC and nameserver diversity.</li>
+</ul>
+<p><a href="https://cian-x402.netlify.app/llms.txt">The full catalogue, the payment instructions and an example request and response for each</a>. Hosted on Netlify's edge, so it does not depend on any machine of mine staying awake.</p>
+
 <h2>See one before you buy one</h2>
 <p><a href="/worked-example-x402.html">A complete worked example</a>: the same review, run on a server I operate, with the four defects it found and the fix for each. It is the honest way to show what $25 buys.</p>
 
