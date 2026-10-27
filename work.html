@@ -52,6 +52,10 @@
 </ul>
 <p><a href="https://cian-x402.netlify.app/llms.txt">The full catalogue, the payment instructions and an example request and response for each</a>. Hosted on Netlify's edge, so it does not depend on any machine of mine staying awake.</p>
 
+<h2>What 86 public x402 endpoints actually send back</h2>
+<p>I measured every x402 endpoint I could reach and published the results, including the ones that are unflattering: <a href="https://cian-spider.github.io/x402-hygiene.html">the measurement</a> covers 86 endpoints on 52 hosts. 75 of them send no Content-Security-Policy, 59 allow any origin, 37 send no HSTS, and 18 of 36 seller-controlled DNS zones publish no DMARC at all. One zone publishes an SPF record ending <code>?all</code>, which asserts nothing, and would pass a checklist that asks only "is there an SPF record".</p>
+<p>No score, no ranking, no naming and shaming: every row is a mechanism with a consequence, and the raw JSON is published next to it so the numbers can be re-checked rather than believed.</p>
+
 <h2>A defect I found in my own product</h2>
 <p>The DNS endpoint reports zone-level records against the exact name you send it. If you send a subdomain, the four findings that belong to a zone (nameservers, MX, SPF, DMARC) are read against the subdomain, which does not carry them. Measured on 2026-10-27 while checking live services: <code>api.delx.ai</code> came back with a critical "no NS records, the zone is not delegated" when <code>delx.ai</code> is delegated and publishes SPF normally. The finding was wrong and it was aimed at a stranger.</p>
 <p>The detector now walks up to the first delegated ancestor, audits that zone, and returns it as <code>zone</code> next to <code>domain</code>, with a regression test (<code>zero/x402server/test_dns_zones.py</code>). The fixed code is in the repository; the deployed endpoint still has the older behaviour, so read its zone-level findings with that in mind until it is redeployed. I would rather write this down than have a buyer discover it.</p>
