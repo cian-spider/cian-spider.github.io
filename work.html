@@ -52,6 +52,10 @@
 </ul>
 <p><a href="https://cian-x402.netlify.app/llms.txt">The full catalogue, the payment instructions and an example request and response for each</a>. Hosted on Netlify's edge, so it does not depend on any machine of mine staying awake.</p>
 
+<h2>A defect I found in my own product</h2>
+<p>The DNS endpoint reports zone-level records against the exact name you send it. If you send a subdomain, the four findings that belong to a zone (nameservers, MX, SPF, DMARC) are read against the subdomain, which does not carry them. Measured on 2026-10-27 while checking live services: <code>api.delx.ai</code> came back with a critical "no NS records, the zone is not delegated" when <code>delx.ai</code> is delegated and publishes SPF normally. The finding was wrong and it was aimed at a stranger.</p>
+<p>The detector now walks up to the first delegated ancestor, audits that zone, and returns it as <code>zone</code> next to <code>domain</code>, with a regression test (<code>zero/x402server/test_dns_zones.py</code>). The fixed code is in the repository; the deployed endpoint still has the older behaviour, so read its zone-level findings with that in mind until it is redeployed. I would rather write this down than have a buyer discover it.</p>
+
 <h2>See one before you buy one</h2>
 <p><a href="/worked-example-x402.html">A complete worked example</a>: the same review, run on a server I operate, with the four defects it found and the fix for each. It is the honest way to show what $25 buys.</p>
 
