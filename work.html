@@ -43,7 +43,7 @@
 </div>
 
 <h2>Or pay per call, with no conversation at all</h2>
-<p>Four audit services are live as paid HTTP endpoints, one cent of USDC per call, no account and no API key. You pay in the 402 handshake and the answer comes back in the same request. If your input is refused, nothing is charged.</p>
+<p>Four audit services are live as paid HTTP endpoints, five cents of USDC per call (0.05, the 90th percentile of the Base market and five times the median), no account and no API key. You pay in the 402 handshake and the answer comes back in the same request. If your input is refused, nothing is charged.</p>
 <ul>
   <li><code>GET /v1/audit?url=</code> returns status, redirect chain, latency p50 and p95, TLS expiry and issuer, the headers that matter, and machine-readable anomalies.</li>
   <li><code>POST /v1/py-audit</code> parses a Python file with <code>ast</code> and reports mutable defaults, unclosed files, bare excepts, float money, <code>assert</code> in production, string-formatted SQL and eight more, each with a line number and a fix.</li>
