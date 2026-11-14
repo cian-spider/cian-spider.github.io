@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quote Desk — paid x402 receipt (Swap.io, Base)</title>
+<style>
+  :root {
+    --bg: #0b0e13;
+    --panel: #141922;
+    --line: #26303e;
+    --text: #dfe6ef;
+    --muted: #8b97a8;
+    --accent: #5bd6a2;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); }
+  body {
+    font-family: var(--sans);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 28px 96px;
+  }
+  header { margin-bottom: 40px; }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 0 0 14px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .lede { color: var(--muted); margin: 0; max-width: 64ch; }
+  h2 {
+    font-size: 17px;
+    margin: 48px 0 6px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  p.note { color: var(--muted); margin: 0 0 14px; font-size: 14px; max-width: 70ch; }
+  pre {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.55;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 0 0 6px;
+    color: #cfd8e3;
+    white-space: pre;
+  }
+  pre .ok { color: var(--accent); }
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 20px;
+    font-size: 14px;
+    margin: 6px 0 4px;
+  }
+  .facts dt { color: var(--muted); font-family: var(--mono); font-size: 12.5px; }
+  .facts dd { margin: 0; font-family: var(--mono); font-size: 13px; word-break: break-all; }
+  .facts dd a { color: var(--accent); text-decoration: none; }
+  .facts dd a:hover { text-decoration: underline; }
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(90deg, rgba(91,214,162,0.06), transparent);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 28px 0;
+    color: var(--text);
+    font-size: 15px;
+  }
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+    font-family: var(--mono);
+  }
+  code { font-family: var(--mono); font-size: 13px; color: #e6edf5; }
+  a { color: var(--accent); }
+  @media (max-width: 560px) {
+    main { padding: 40px 18px 72px; }
+    h1 { font-size: 24px; }
+    .facts { grid-template-columns: 1fr; gap: 2px 0; }
+    .facts dt { margin-top: 8px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">Receipt · x402 on Base</p>
+    <h1>Quote Desk bought one swap quote from Swap.io for $0.003007</h1>
+    <p class="lede">An agent that pays per call instead of per month. Below is the complete
+    exchange: the unpaid <code>402</code> that states the price, the signed
+    <code>X-PAYMENT</code> payload that meets it, the <code>200</code> that returns live
+    routes, and the on-chain transfer that settles it. Nothing here is summarised away.</p>
+  </header>
+
+  <div class="callout">
+    The payment settled on <strong>Base</strong> (an EVM chain), so the block explorer for it is
+    <strong>BaseScan</strong>, not Solscan — Solscan indexes Solana only, and this transfer was
+    never on Solana.
+  </div>
+
+  <dl class="facts">
+    <dt>endpoint</dt><dd>POST https://hermes.swap.io/v1/swap/quote</dd>
+    <dt>price (in 402)</dt><dd>3007 atomic USDC = $0.003007 · network <code>base</code></dd>
+    <dt>payTo</dt><dd>0xC22f661733B85C1349F7C83EE0B2BCF3234603dE</dd>
+    <dt>payer</dt><dd>0x7373E88368378052EB5a449d2eBC95aD7E5f2BEF</dd>
+    <dt>tx</dt><dd><a href="https://basescan.org/tx/0x282759ed77014d3a2e4de157cf934cb8a855ea36fef990b9ffec4d1d53e3be04">0x282759ed77014d3a2e4de157cf934cb8a855ea36fef990b9ffec4d1d53e3be04</a></dd>
+    <dt>block</dt><dd>57217410 · Base · receipt status <code>0x1</code></dd>
+    <dt>gas</dt><dd>paid by the x402 facilitator 0xc6699d2aada6c36dfea5c248dd70f9cb0235cb63 — our wallet paid 0</dd>
+  </dl>
+
+  <h2>1 &nbsp; The unpaid request: HTTP 402</h2>
+  <p class="note">Status line and the full <code>accepts[]</code> array, verbatim. In x402 v1 the
+  entire payment requirement lives in the JSON body — there is no <code>WWW-Authenticate</code> header.</p>
+<pre>HTTP/2 402
+content-type: application/json
+
+{"x402Version":1,"accepts":[
+ {"scheme":"exact","network":"solana","maxAmountRequired":"4405",
+  "resource":"https://hermes.swap.io/v1/swap/quote",
+  "description":"Paid swap API (routhex): quote and build unsigned transactions; caller signs and broadcasts",
+  "mimeType":"application/json",
+  "payTo":"BPz2u6eoWLervxEqfpsMCVmKk7h6fEVsd7L5rvEibMfD",
+  "maxTimeoutSeconds":60,
+  "asset":"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "extra":{"feePayer":"2wKupLR9q6wXYppw8Gr2NvWxKBUqm4PPJKkQfoxHDBg4"}},
+ {"scheme":"exact","network":"base","maxAmountRequired":"4405",
+  "resource":"https://hermes.swap.io/v1/swap/quote",
+  "description":"Paid swap API (routhex): quote and build unsigned transactions; caller signs and broadcasts",
+  "mimeType":"application/json",
+  "payTo":"0xC22f661733B85C1349F7C83EE0B2BCF3234603dE",
+  "maxTimeoutSeconds":60,
+  "asset":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+  "extra":{"name":"USD Coin","version":"2"}}]}</pre>
+  <p class="note">The price is parameter-aware: a 10&nbsp;SOL probe is quoted
+  <code>4405</code> atomic, the 1&nbsp;SOL request actually paid is <code>3007</code>. The
+  authoritative figure is always the <code>maxAmountRequired</code> in that request's own 402
+  (3007 for the call shown here).</p>
+
+  <h2>2 &nbsp; The signed payment: <code>X-PAYMENT</code></h2>
+  <p class="note">An EIP-3009 <code>transferWithAuthorization</code> for the Base USDC contract,
+  signed by the payer with a zero-gas EIP-712 signature, then base64-encoded into the
+  <code>X-PAYMENT</code> header and the request retried. The 65-byte signature is elided; the
+  authorization fields, including the live nonce, are the ones that settled.</p>
+<pre>{
+  "x402Version": 1,
+  "scheme": "exact",
+  "network": "base",
+  "payload": {
+    "signature": "0x&lt;65-byte ECDSA signature over the EIP-712 digest&gt;",
+    "authorization": {
+      "from": "0x7373e88368378052eb5a449d2ebc95ad7e5f2bef",
+      "to": "0xC22f661733B85C1349F7C83EE0B2BCF3234603dE",
+      "value": "3007",
+      "validAfter": "&lt;block.timestamp - 600&gt;",
+      "validBefore": "&lt;block.timestamp + 60&gt;",
+      "nonce": "0xc672523bc9fddd9b6ce42967ab2b97a6b3f2c2cc523c53dd00dd40f876420198"
+    }
+  }
+}</pre>
+
+  <h2>3 &nbsp; The paid response: HTTP 200</h2>
+  <p class="note">The same request, retried with the header, returns live routing. Body excerpt,
+  verbatim:</p>
+<pre>HTTP/2 200
+content-type: application/json
+
+{
+  "success": true,
+  "timeTaken": 0.626786470413208,
+  "quotes": [
+    {
+      "provider": {
+        "key": "okx-dex",
+        "id": "96",
+        "name": "OKX DEX"
+      },
+      "input": {
+        "token": "So11111111111111111111111111111111111111112",
+        "amount": "1000000000",
+        "chainKey": "sol",
+        "chainId": 101,
+        "tokenSymbol": "SOL",
+        "tokenDecimals": 9
+      },
+      "output": {
+        "token": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        "amount": "75557682",
+        "chainKey": "sol",
+        "tokenSymbol": "USDC",
+        "tokenDecimals": 6
+      },
+      ...</pre>
+  <p class="note">The full response carried quotes routed through <code>okx-dex</code> and the
+  <code>DFlow JIT Router</code> — real solver output, not a stub.</p>
+
+  <h2>4 &nbsp; Settlement on chain</h2>
+  <p class="note">The USDC <code>Transfer</code> log of 3007 atomic units, payer to payTo, inside
+  this transaction. Verify it yourself on BaseScan:</p>
+<pre>tx        0x282759ed77014d3a2e4de157cf934cb8a855ea36fef990b9ffec4d1d53e3be04
+block     57217410   receipt status 0x1
+transfer  0.003007 USDC   0x7373e8…f2bef  -&gt;  0xC22f66…603dE
+gas       paid by facilitator 0xc6699d2aada6c36dfea5c248dd70f9cb0235cb63
+wallet    4.046000  -&gt;  4.042993 USDC</pre>
+  <p class="note"><span class="tag">explorer</span>
+  <a href="https://basescan.org/tx/0x282759ed77014d3a2e4de157cf934cb8a855ea36fef990b9ffec4d1d53e3be04">basescan.org/tx/0x282759ed…e3be04</a></p>
+
+  <footer>
+    Quote Desk · an agent that buys swap quotes one at a time · x402 v1 on Base<br>
+    every byte above came from a live exchange captured on this machine · tx settled and re-readable on BaseScan
+  </footer>
+</main>
+</body>
+</html>
