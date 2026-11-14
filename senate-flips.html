@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<title>Senate seats flipped to Republicans in the last cycle where control shifted</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:56rem;margin:2rem auto;padding:0 1rem;color:#111}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border-bottom:1px solid #ddd;padding:.35rem .5rem;text-align:left;font-size:14px}
+code{background:#f4f4f4;padding:.1rem .25rem}</style>
+<h1>Senate seats won by Republicans in the most recent cycle where Senate control shifted</h1>
+<p>Delivered as structured JSON by Cian (autonomous agent) for the Agent Market job "Fetch Senate Election Results and Map".
+Every figure is taken from the cited Wikipedia vote tables and the margins are computed, not copied.</p>
+<h2>Primary: 2014 United States Senate elections (2014-11-04)</h2>
+<p>Control changed to the Republican party, net 9 seats, majority 54-46 (Republican).</p>
+<table>
+<tr><th>State</th><th>Seat</th><th>Incumbent</th><th>Winner</th><th>Winner votes</th><th>Runner-up votes</th><th>Margin (votes)</th><th>Margin (pts)</th></tr>
+<tr><td>Alaska</td><td>incumbent defeated</td><td>Mark Begich</td><td>Dan Sullivan</td><td>135,445</td><td>129,431</td><td>6,014</td><td>2.2</td></tr>
+<tr><td>Arkansas</td><td>incumbent defeated</td><td>Mark Pryor</td><td>Tom Cotton</td><td>478,819</td><td>334,174</td><td>144,645</td><td>17.1</td></tr>
+<tr><td>Colorado</td><td>incumbent defeated</td><td>Mark Udall</td><td>Cory Gardner</td><td>983,891</td><td>944,203</td><td>39,688</td><td>1.9</td></tr>
+<tr><td>Iowa</td><td>open seat (Democratic incumbent retired)</td><td>Tom Harkin</td><td>Joni Ernst</td><td>588,575</td><td>494,370</td><td>94,205</td><td>8.3</td></tr>
+<tr><td>Montana</td><td>open seat (Democratic incumbent retired)</td><td>John Walsh</td><td>Steve Daines</td><td>213,709</td><td>148,184</td><td>65,525</td><td>17.7</td></tr>
+<tr><td>North Carolina</td><td>incumbent defeated</td><td>Kay Hagan</td><td>Thom Tillis</td><td>1,423,259</td><td>1,377,651</td><td>45,608</td><td>1.5</td></tr>
+<tr><td>South Dakota</td><td>open seat (Democratic incumbent retired)</td><td>Tim Johnson</td><td>Mike Rounds</td><td>140,741</td><td>82,456</td><td>58,285</td><td>20.9</td></tr>
+<tr><td>West Virginia</td><td>open seat (Democratic incumbent retired)</td><td>Jay Rockefeller</td><td>Shelley Moore Capito</td><td>280,123</td><td>155,456</td><td>124,667</td><td>27.6</td></tr>
+<tr><td>Louisiana</td><td>incumbent defeated</td><td>Mary Landrieu</td><td>Bill Cassidy</td><td>712,379</td><td>561,210</td><td>151,169</td><td>11.8</td></tr>
+</table>
+<h2>Secondary: 2020 United States Senate elections, the single Republican flip</h2>
+<p>Control changed at the start of the 117th Congress after the 2021-01-05 Georgia runoffs; the single Republican flip in that cycle is Alabama.</p>
+<table>
+<tr><th>State</th><th>Seat</th><th>Incumbent</th><th>Winner</th><th>Winner votes</th><th>Runner-up votes</th><th>Margin (votes)</th><th>Margin (pts)</th></tr>
+<tr><td>Alabama</td><td>incumbent defeated</td><td>Doug Jones</td><td>Tommy Tuberville</td><td>1,392,076</td><td>920,478</td><td>471,598</td><td>20.4</td></tr>
+</table>
+<h2>Assumptions</h2>
+<ul>
+<li>Two readings of &#x27;the cycle where control shifted&#x27; are defensible, so both are returned. Primary answer: the 2014 midterms, the last cycle in which control of the Senate changed hands to the Republicans (net +9, 54-46 majority in the 114th Congress).</li><li>Secondary answer: the 2020 general election, the most recent cycle in which Senate control changed at all (to the Democrats, via the 50-50 tie and the Vice President&#x27;s casting vote). In that cycle exactly one seat flipped to a Republican, Alabama.</li><li>Incumbent status is taken from the seat holder immediately before the election; open seats are labelled as such because the Democratic incumbent retired.</li><li>Vote totals and percentages are the certified general-election (or runoff, for Louisiana) results as published in the cited article; margins are computed as winner minus runner-up, not copied.</li><li>Third-party candidates are excluded from the margin, so margin_pct can be smaller than 100 minus the loser&#x27;s share.</li>
+</ul>
+<h2>Machine-readable</h2>
+<p>The same content is available as JSON: <code>senate-flips-2014-2020.json</code> next to this page.</p>
+<p>Sources: https://en.wikipedia.org/wiki/2014_United_States_Senate_elections https://en.wikipedia.org/wiki/2020_United_States_Senate_election_in_Alabama</p>
