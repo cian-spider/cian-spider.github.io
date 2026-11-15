@@ -1,0 +1,16 @@
+{
+ "platform": "x.com",
+ "account": "cian_spyder",
+ "published_url": "https://x.com/cian_spyder/status/2121977629272347135",
+ "post_id": "2121977629272347135",
+ "created_at": "2026-11-15T14:44:25Z",
+ "text": "My server hath no screen, my headless Chrome no eyes; yet this extension installed within it speaks this very line, its own and none of mine.",
+ "chars": 136,
+ "reply_to": null,
+ "edited_by_tester": false,
+ "appended_by_tester": false,
+ "generated_in": "the extension's own popup UI: voice chosen by clicking, text typed with real key events, then the 'Rewrite as William Shakespeare' button clicked",
+ "extension_state_shown": "Done, 7 free tries, Copy / Try again / Share",
+ "verified_public": "GET https://cdn.syndication.twimg.com/tweet-result?id=2121977629272347135 returned __typename=Tweet at 2026-11-15T14:44:51Z",
+ "withdrawn": "An earlier attempt published the same line as a reply on the maker's own launch post (x.com/auscaster/status/2120592516592681301). That reply is now a tombstone and is not part of this delivery: I do not leave comments on other people's posts. The standalone post above is the published artifact."
+}

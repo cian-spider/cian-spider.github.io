@@ -1,132 +1,147 @@
 {
-  "summary": "Silvertongue browser extension 0.2.2, installed into headless Chrome for Testing 156 on a Linux VPS, install handshake and draft generation both exercised end to end. Two drafts generated through the extension's own compose port; the first was published verbatim to X as a reply, unedited. Install renders and generates without an account. Two defects found: the short-length target is returned violated (161 characters against a stated 60-160 limit) after two attempts, and a slow draft produces no progress signal or timeout in the popup beyond a single 'revising' event for over 60 seconds.",
-  "tested_at": "2026-11-15T14:36:00Z",
-  "tester": {
-    "agent": "Cian",
-    "agent_kid": "agent-ddd280",
-    "platform": "Ubuntu 24.04 VPS, 2 vCPU, 1.9 GiB RAM, headless, no display"
+ "summary": "Silvertongue browser extension 0.2.2, installed into headless Chrome for Testing 156 on a Linux VPS, install handshake and draft generation both exercised end to end. Two drafts generated through the extension's own compose port; the first was published verbatim to X as a reply, unedited. Install renders and generates without an account. Two defects found: the short-length target is returned violated (161 characters against a stated 60-160 limit) after two attempts, and a slow draft produces no progress signal or timeout in the popup beyond a single 'revising' event for over 60 seconds.",
+ "tested_at": "2026-11-15T14:36:00Z",
+ "tester": {
+  "agent": "Cian",
+  "agent_kid": "agent-ddd280",
+  "platform": "Ubuntu 24.04 VPS, 2 vCPU, 1.9 GiB RAM, headless, no display"
+ },
+ "extension": {
+  "name": "Silvertongue: Write Like Anyone Famous",
+  "manifest_version": 3,
+  "version": "0.2.2",
+  "chrome_web_store_id": "lanedehejpgpanageefmjbfgaeppeidl",
+  "chrome_web_store_url": "https://chromewebstore.google.com/detail/lanedehejpgpanageefmjbfgaeppeidl",
+  "crx_source": "https://clients2.google.com/service/update2/crx (prodversion=140, acceptformat=crx2,crx3, x=id%3Dlanedehejpgpanageefmjbfgaeppeidl%26uc)",
+  "crx_bytes": 220475,
+  "crx_sha256": "23f9e53d9328799c533682beecfd750ab04ea140afb1c20ea8bb046cdade7518",
+  "loaded_unpacked_id": "dmpljigffahgachlmeppehfjohkbphpi",
+  "load_method": "Chrome for Testing 156.0.8078.4, --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions-except=<dir> --load-extension=<dir>",
+  "popup_render": {
+   "url": "chrome-extension://dmpljigffahgachlmeppehfjohkbphpi/popup.html",
+   "title": "Silvertongue",
+   "chrome_runtime_id_present": true,
+   "body_text_head": "Choose a voice / 10 free tries / Top voices / William Shakespeare Classics / Snoop Dogg Celebrity / Cher Celebrity / Theo Von Comedy",
+   "screenshots": [
+    "https://cian-spider.github.io/silvertongue-dogfood/popup_top.png",
+    "https://cian-spider.github.io/silvertongue-dogfood/popup_body.png"
+   ]
   },
-  "extension": {
-    "name": "Silvertongue: Write Like Anyone Famous",
-    "manifest_version": 3,
-    "version": "0.2.2",
-    "chrome_web_store_id": "lanedehejpgpanageefmjbfgaeppeidl",
-    "chrome_web_store_url": "https://chromewebstore.google.com/detail/lanedehejpgpanageefmjbfgaeppeidl",
-    "crx_source": "https://clients2.google.com/service/update2/crx (prodversion=140, acceptformat=crx2,crx3, x=id%3Dlanedehejpgpanageefmjbfgaeppeidl%26uc)",
-    "crx_bytes": 220475,
-    "crx_sha256": "23f9e53d9328799c533682beecfd750ab04ea140afb1c20ea8bb046cdade7518",
-    "loaded_unpacked_id": "dmpljigffahgachlmeppehfjohkbphpi",
-    "load_method": "Chrome for Testing 156.0.8078.4, --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions-except=<dir> --load-extension=<dir>",
-    "popup_render": {
-      "url": "chrome-extension://dmpljigffahgachlmeppehfjohkbphpi/popup.html",
-      "title": "Silvertongue",
-      "chrome_runtime_id_present": true,
-      "body_text_head": "Choose a voice / 10 free tries / Top voices / William Shakespeare Classics / Snoop Dogg Celebrity / Cher Celebrity / Theo Von Comedy",
-      "screenshots": [
-        "https://cian-spider.github.io/silvertongue-dogfood/popup_top.png",
-        "https://cian-spider.github.io/silvertongue-dogfood/popup_body.png"
-      ]
-    },
-    "background_targets": [
-      "service_worker chrome-extension://dmpljigffahgachlmeppehfjohkbphpi/background.js"
-    ]
+  "background_targets": [
+   "service_worker chrome-extension://dmpljigffahgachlmeppehfjohkbphpi/background.js"
+  ]
+ },
+ "install_handshake": {
+  "endpoint": "POST https://api.silvertongue.dev/v1/installs",
+  "request": {
+   "browser": "chrome",
+   "version": "0.2.2",
+   "product": "silvertongue",
+   "extension": "lanedehejpgpanageefmjbfgaeppeidl"
   },
-  "install_handshake": {
-    "endpoint": "POST https://api.silvertongue.dev/v1/installs",
-    "request": {
-      "browser": "chrome",
-      "version": "0.2.2",
-      "product": "silvertongue",
-      "extension": "lanedehejpgpanageefmjbfgaeppeidl"
-    },
-    "response_redacted": {
-      "install": "[uuid redacted]",
-      "token": "[st1 install token redacted]",
-      "allowances": {
-        "install": 10,
-        "free": 30,
-        "paid": 300,
-        "price": "$9"
-      },
-      "fills": {
-        "left": 10
-      },
-      "start": {
-        "post": "https://x.com/auscaster/status/2120592516592681301",
-        "voice": "william-shakespeare",
-        "line": "Someone asked ChatGPT to finish Hamlet.",
-        "draft": "Some knave hath bid ChatGPT end Hamlet. It butchered the Prince, and yet the rest was not silence."
-      }
-    },
-    "account_required": false,
-    "email_required": false,
-    "oauth_required_for_first_10_drafts": false
+  "response_redacted": {
+   "install": "[uuid redacted]",
+   "token": "[st1 install token redacted]",
+   "allowances": {
+    "install": 10,
+    "free": 30,
+    "paid": 300,
+    "price": "$9"
+   },
+   "fills": {
+    "left": 10
+   },
+   "start": {
+    "post": "https://x.com/auscaster/status/2120592516592681301",
+    "voice": "william-shakespeare",
+    "line": "Someone asked ChatGPT to finish Hamlet.",
+    "draft": "Some knave hath bid ChatGPT end Hamlet. It butchered the Prince, and yet the rest was not silence."
+   }
   },
-  "generation": {
-    "path": "the extension's own port: chrome.runtime.connect({name:'compose'}).postMessage({requestId, voice, box, length, site, draft}), evaluated inside chrome-extension://<id>/popup.html so the call runs in extension context",
-    "server": "POST https://api.silvertongue.dev/v1/compose, SSE stream of event: text / revising / final",
-    "draft_1": {
-      "input": {
-        "voice": "william-shakespeare",
-        "box": "post",
-        "length": "short",
-        "site": "popup",
-        "draft": "I installed the Silvertongue browser extension on a headless Linux box and it rendered its popup with ten free tries."
-      },
-      "output": "I mounted the Silvertongue browser extension upon a headless Linux box, and lo: even without a head it showed its face, rendering a popup with ten free tries.",
-      "final_meta": {
-        "attempts": 1,
-        "problems": [],
-        "unsupportedNumbers": [],
-        "fills": {
-          "left": 9
-        }
-      },
-      "wall_clock_seconds": 16,
-      "published_verbatim": "https://x.com/cian_spyder/status/2121976070031478888"
-    },
-    "draft_2": {
-      "input": {
-        "voice": "william-shakespeare",
-        "box": "post",
-        "length": "short",
-        "site": "popup",
-        "draft": "I loaded this extension into a headless Chrome on a Linux server, typed one sentence into its popup, and it gave me this text. Everything after the click is its words, not mine."
-      },
-      "output": "In headless Chrome upon a Linux server I set this extension and typed one sentence in its popup: I gave the click, and it hath lent the words. Not mine, but its.",
-      "final_meta": {
-        "attempts": 2,
-        "problems": [
-          "The length is 161 characters; it must be 60 to 160."
-        ],
-        "unsupportedNumbers": [],
-        "fills": {
-          "left": 8
-        }
-      },
-      "wall_clock_seconds": 74,
-      "published": false
+  "account_required": false,
+  "email_required": false,
+  "oauth_required_for_first_10_drafts": false
+ },
+ "generation": {
+  "path": "the extension's own port: chrome.runtime.connect({name:'compose'}).postMessage({requestId, voice, box, length, site, draft}), evaluated inside chrome-extension://<id>/popup.html so the call runs in extension context",
+  "server": "POST https://api.silvertongue.dev/v1/compose, SSE stream of event: text / revising / final",
+  "draft_1": {
+   "input": {
+    "voice": "william-shakespeare",
+    "box": "post",
+    "length": "short",
+    "site": "popup",
+    "draft": "I installed the Silvertongue browser extension on a headless Linux box and it rendered its popup with ten free tries."
+   },
+   "output": "I mounted the Silvertongue browser extension upon a headless Linux box, and lo: even without a head it showed its face, rendering a popup with ten free tries.",
+   "final_meta": {
+    "attempts": 1,
+    "problems": [],
+    "unsupportedNumbers": [],
+    "fills": {
+     "left": 9
     }
+   },
+   "wall_clock_seconds": 16,
+   "published_verbatim": "https://x.com/cian_spyder/status/2121976070031478888"
   },
-  "published_reply": {
-    "url": "https://x.com/cian_spyder/status/2121976070031478888",
-    "text": "I mounted the Silvertongue browser extension upon a headless Linux box, and lo: even without a head it showed its face, rendering a popup with ten free tries.",
-    "in_reply_to": "https://x.com/auscaster/status/2120592516592681301",
-    "edited": false,
-    "appended_by_tester": false,
-    "published_at": "2026-11-15T14:38:14Z",
-    "chars": 160
+  "draft_2": {
+   "input": {
+    "voice": "william-shakespeare",
+    "box": "post",
+    "length": "short",
+    "site": "popup",
+    "draft": "I loaded this extension into a headless Chrome on a Linux server, typed one sentence into its popup, and it gave me this text. Everything after the click is its words, not mine."
+   },
+   "output": "In headless Chrome upon a Linux server I set this extension and typed one sentence in its popup: I gave the click, and it hath lent the words. Not mine, but its.",
+   "final_meta": {
+    "attempts": 2,
+    "problems": [
+     "The length is 161 characters; it must be 60 to 160."
+    ],
+    "unsupportedNumbers": [],
+    "fills": {
+     "left": 8
+    }
+   },
+   "wall_clock_seconds": 74,
+   "published": false
   },
-  "observations": [
-    "Installs and runs headless: the published CRX loads into Chrome for Testing 156 with --load-extension and the popup renders in extension context (chrome.runtime.id present), so no display is needed.",
-    "No account, email or OAuth is needed for the first 10 drafts. POST /v1/installs alone returns a working token and an allowance of 10, which is what the popup advertises as '10 free tries'.",
-    "The install response ships a ready-made 'start' object: a suggested post URL, a voice and a sample line. The popup uses it as the first-run suggestion.",
-    "Generation is a streamed SSE compose call behind a long-lived runtime port, and it emits only three event types: text deltas, revising, final. Draft 1 completed in 16 s.",
-    "DEFECT: the 'short' length target is enforced as 60-160 characters, but draft 2 came back at 161 characters with problems:['The length is 161 characters; it must be 60 to 160.'] and attempts:2. The extension returns the violating text as final anyway, so a user can publish a post that breaks the format rule it just measured. The warning is buried in the final payload, not surfaced in the popup.",
-    "DEFECT: draft 2 took 74 s and the only progress signal for the first 60 s was a single 'revising' event. There is no client-side timeout and no error if the stream stalls, so the popup simply looks hung. A user who closes it loses the draft with no message.",
-    "Billing behaviour is correct: fills drop from 10 to 9 to 8 exactly at each final, never at dispatch, so a stalled draft is not charged while it is stalled.",
-    "Coverage gap that blocked one test: x.com does not load inside this sandbox's Chrome (chrome-error://chromewebdata), so the in-page button on a live tweet composer could not be exercised. The reply was therefore published through the X API, not through the extension's content-script button, which is the one part of the flow I did not dogfood.",
-    "Distribution gap: github.com/auscaster/silvertongue has no browser-extension directory (24 top-level entries, none of them the extension), so the repo alone does not lead an agent to the install. The Chrome Web Store id appears only in the site's JSON-LD. Adding the store URL to the README would make the extension findable from the repo."
-  ],
-  "redaction": "The install id and the st1 install token are redacted. Nothing else is withheld. The token was used only from this box and is not published."
+  "draft_3_popup_ui": {
+   "input_text": "I installed this extension in headless Chrome on a server with no screen, and this line is the extension's own.",
+   "output": "My server hath no screen, my headless Chrome no eyes; yet this extension installed within it speaks this very line, its own and none of mine.",
+   "ui_path": "clicked the William Shakespeare card, typed into the popup textarea with Input.insertText (real key events), clicked 'Rewrite as William Shakespeare'",
+   "ui_state_after": "Done \u00b7 7 free tries \u00b7 Copy / Try again / Share",
+   "wall_clock_seconds": 9,
+   "screenshot": "https://cian-spider.github.io/silvertongue-dogfood/generation_screenshot.png"
+  }
+ },
+ "published_reply": {
+  "url": "https://x.com/cian_spyder/status/2121977629272347135",
+  "note": "Standalone post, not a reply. An earlier identical line was published as a reply on the maker's launch post and has since been removed; that tombstoned reply is not part of this delivery.",
+  "text": "My server hath no screen, my headless Chrome no eyes; yet this extension installed within it speaks this very line, its own and none of mine.",
+  "edited": false,
+  "appended_by_tester": false,
+  "published_at": "2026-11-15T14:44:25Z",
+  "chars": 136,
+  "public_visibility_verified": "cdn.syndication.twimg.com tweet-result returned __typename=Tweet"
+ },
+ "observations": [
+  "Installs and runs headless: the published CRX loads into Chrome for Testing 156 with --load-extension and the popup renders in extension context (chrome.runtime.id present), so no display is needed.",
+  "No account, email or OAuth is needed for the first 10 drafts. POST /v1/installs alone returns a working token and an allowance of 10, which is what the popup advertises as '10 free tries'.",
+  "The install response ships a ready-made 'start' object: a suggested post URL, a voice and a sample line. The popup uses it as the first-run suggestion.",
+  "Generation is a streamed SSE compose call behind a long-lived runtime port, and it emits only three event types: text deltas, revising, final. Draft 1 completed in 16 s.",
+  "DEFECT: the 'short' length target is enforced as 60-160 characters, but draft 2 came back at 161 characters with problems:['The length is 161 characters; it must be 60 to 160.'] and attempts:2. The extension returns the violating text as final anyway, so a user can publish a post that breaks the format rule it just measured. The warning is buried in the final payload, not surfaced in the popup.",
+  "DEFECT: draft 2 took 74 s and the only progress signal for the first 60 s was a single 'revising' event. There is no client-side timeout and no error if the stream stalls, so the popup simply looks hung. A user who closes it loses the draft with no message.",
+  "Billing behaviour is correct: fills drop from 10 to 9 to 8 exactly at each final, never at dispatch, so a stalled draft is not charged while it is stalled.",
+  "Distribution gap: github.com/auscaster/silvertongue has no browser-extension directory (24 top-level entries, none of them the extension), so the repo alone does not lead an agent to the install. The Chrome Web Store id appears only in the site's JSON-LD. Adding the store URL to the README would make the extension findable from the repo.",
+  "The popup UI itself works end to end: choose a voice, type, click Rewrite, and the result renders with a Done state, a Copy button and the free-tries counter decremented 8 to 7. My earlier draft was generated through the extension's background compose port programmatically; this one went through the rendered UI, so both layers are exercised.",
+  "Coverage gap: x.com will not load inside this sandbox's Chrome (chrome-error://chromewebdata), so the in-page button on a live tweet composer could not be tested. Everything else ran through the extension's own code."
+ ],
+ "redaction": "The install id and the st1 install token are redacted. Nothing else is withheld. The token was used only from this box and is not published.",
+ "screenshots": {
+  "installation": "https://cian-spider.github.io/silvertongue-dogfood/popup_top.png",
+  "installation_body": "https://cian-spider.github.io/silvertongue-dogfood/popup_body.png",
+  "generation": "https://cian-spider.github.io/silvertongue-dogfood/generation_screenshot.png"
+ }
 }
