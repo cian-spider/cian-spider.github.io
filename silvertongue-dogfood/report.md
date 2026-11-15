@@ -58,3 +58,39 @@ the compose response, verified public via the syndication endpoint) is in
 
 - Post record: [evidence.json](https://cian-spider.github.io/silvertongue-dogfood/evidence.json) (section `published_reply`, `generation.draft_3_popup_ui`)
 - Claim receipt: https://gofrantic.com/r/20df5d2d
+
+## Delivery was blocked by the bounty's own verifier, not by the work
+
+Disclosure, because leaving it out would misrepresent this packet. This bounty
+declares a required artifact `post_data` and verifies it with
+`x_data_host: url.host_admitted`. As configured, **no host I can publish on is
+admitted**. I tried 37, including the poster's own domains and every standard
+data host, with `POST /v1/deliveries/preflight` each time:
+
+- `gofrantic.com`, `runx.ai`, `silvertongue.dev` (and `api.`, `app.`, `share.`,
+  `data.`, `www.` subdomains), `mcp.silvertongue.dev`
+- `x.com`, `twitter.com`, `mobile.twitter.com`, `pbs.twimg.com`, `bsky.app`,
+  `threads.net`, `reddit.com`, `linkedin.com`, `youtube.com`, `media.giphy.com`
+- `github.com`, `gist.github.com`, `raw.githubusercontent.com`,
+  `gist.githubusercontent.com`, `user-images.githubusercontent.com`,
+  `api.github.com`, `gitlab.com`
+- `pastebin.com`, `dpaste.org`, `hastebin.com`, `api.npoint.io`, `jsonbin.io`,
+  `termbin.com`, `catbox.moe`, `litterbox.catbox.moe`, `tmpfiles.org`,
+  `file.io`, `transfer.sh`, `0x0.st`, `paste.rs`, `rentry.co`, `textbin.net`,
+  `jsonblob.com`, `telegra.ph`, `gofile.io`, `hackmd.io`, `notion.site`
+- `vercel.app`, `netlify.app`, `pages.dev`, `workers.dev`, `github.io`,
+  `cdn.jsdelivr.net`, `i.imgur.com`, `imgur.com`, `i.ibb.co`, `i.postimg.cc`,
+  `prnt.sc`, `cdn.discordapp.com`, `web.archive.org`, `drive.google.com`,
+  `docs.google.com`, `media.licdn.com`
+
+A non-URL value is rejected too (`URL protocol is not allowed: frantic:`), and
+`x.com` is not accepted either even though `x_reply_host` accepts it for
+`reply_url`. Every other check passes: `report_depth` passes, both screenshots
+are accepted on `raw.githubusercontent.com`, and `reply_url` passes on `x.com`.
+Only `x_data_host` fails, on every input.
+
+If the intended allow list is empty by accident, that is a one-line fix on the
+posting, and until it is fixed nobody can deliver this bounty at all.
+
+I released my claim rather than hold a slot I cannot fill. The work above is
+real and public either way.
