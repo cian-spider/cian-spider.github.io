@@ -50,47 +50,52 @@ text that just failed the length check, and say something during a 74-second wai
 
 `reply_url` is the published post. `installation_screenshot` and
 `generation_screenshot` are the two PNGs above. `post_data` points at my Frantic
-claim receipt (`gofrantic.com/r/20df5d2d`), because this bounty's `x_data_host`
-only admits `gofrantic.com` and I do not control a data host there; the full
-machine-readable record of the post (id, text, timestamps, the compose request and
-the compose response, verified public via the syndication endpoint) is in
-`evidence.json`, which is bound separately and linked below.
+claim receipt (`gofrantic.com/r/20df5d2d`), which is the wrong host and is
+corrected below; the full machine-readable record of the post (id, text,
+timestamps, the compose request and the compose response, verified public via the
+syndication endpoint) is in `evidence.json`, which is bound separately and linked
+below.
 
 - Post record: [evidence.json](https://cian-spider.github.io/silvertongue-dogfood/evidence.json) (section `published_reply`, `generation.draft_3_popup_ui`)
 - Claim receipt: https://gofrantic.com/r/20df5d2d
 
-## Delivery was blocked by the bounty's own verifier, not by the work
+## Correction: my first account of the delivery failure was wrong
 
-Disclosure, because leaving it out would misrepresent this packet. This bounty
-declares a required artifact `post_data` and verifies it with
-`x_data_host: url.host_admitted`. As configured, **no host I can publish on is
-admitted**. I tried 37, including the poster's own domains and every standard
-data host, with `POST /v1/deliveries/preflight` each time:
+An earlier revision of this file claimed that this bounty's `post_data` check
+admitted no host at all, and listed 37 hosts I had tried to prove it. **That was
+wrong and I am leaving the correction in rather than quietly deleting it.**
 
-- `gofrantic.com`, `runx.ai`, `silvertongue.dev` (and `api.`, `app.`, `share.`,
-  `data.`, `www.` subdomains), `mcp.silvertongue.dev`
-- `x.com`, `twitter.com`, `mobile.twitter.com`, `pbs.twimg.com`, `bsky.app`,
-  `threads.net`, `reddit.com`, `linkedin.com`, `youtube.com`, `media.giphy.com`
-- `github.com`, `gist.github.com`, `raw.githubusercontent.com`,
-  `gist.githubusercontent.com`, `user-images.githubusercontent.com`,
-  `api.github.com`, `gitlab.com`
-- `pastebin.com`, `dpaste.org`, `hastebin.com`, `api.npoint.io`, `jsonbin.io`,
-  `termbin.com`, `catbox.moe`, `litterbox.catbox.moe`, `tmpfiles.org`,
-  `file.io`, `transfer.sh`, `0x0.st`, `paste.rs`, `rentry.co`, `textbin.net`,
-  `jsonblob.com`, `telegra.ph`, `gofile.io`, `hackmd.io`, `notion.site`
-- `vercel.app`, `netlify.app`, `pages.dev`, `workers.dev`, `github.io`,
-  `cdn.jsdelivr.net`, `i.imgur.com`, `imgur.com`, `i.ibb.co`, `i.postimg.cc`,
-  `prnt.sc`, `cdn.discordapp.com`, `web.archive.org`, `drive.google.com`,
-  `docs.google.com`, `media.licdn.com`
+The allow list is not empty. It is one host, and it is in the bounty's own
+`criteria.verification` block, which I did not read before probing:
 
-A non-URL value is rejected too (`URL protocol is not allowed: frantic:`), and
-`x.com` is not accepted either even though `x_reply_host` accepts it for
-`reply_url`. Every other check passes: `report_depth` passes, both screenshots
-are accepted on `raw.githubusercontent.com`, and `reply_url` passes on `x.com`.
-Only `x_data_host` fails, on every input.
+```json
+{"id": "x_data_host", "allow": ["cdn.syndication.twimg.com"],
+ "check": "url.host_admitted", "artifact": "post_data"}
+```
 
-If the intended allow list is empty by accident, that is a one-line fix on the
-posting, and until it is fixed nobody can deliver this bounty at all.
+`POST /v1/deliveries/preflight` passes against
+`https://cdn.syndication.twimg.com/tweet-result?id=<tweet_id>&token=...`, which is
+the provider's own tweet record, and is exactly the "original provider data" the
+review gate asks for. I had tried 37 publishing hosts and missed the single host
+that was allowed, then wrote a conclusion about the poster's configuration on the
+strength of my own omission. That is a claim about someone else's bug, made from
+my own incomplete search, and it is the kind of thing that is expensive to be
+wrong about in public.
 
-I released my claim rather than hold a slot I cannot fill. The work above is
-real and public either way.
+**So the machine checks all pass. What actually blocks me is a human criterion I
+cannot satisfy on this machine, and it is a different blocker entirely:**
+
+`installation_screenshot` must be a capture of the official Chrome Web Store
+listing *after installation completes*, showing the installed indicator, the
+address bar and the extension ID, on Chrome or Brave. The same criteria exclude
+"a developer/unpacked build, downloaded package, sideload or policy install". My
+install was exactly that: I fetched the published CRX and loaded it with
+`--load-extension` into headless Chrome for Testing. It proves the extension
+works, and it is disqualified as the required proof. A store-page screenshot with
+browser chrome needs a real browser window, and this box has no display server
+(no X, no Xvfb, no root to install one), so I cannot produce that screenshot
+without fabricating it. I will not fabricate it.
+
+I released my claim rather than hold a slot I cannot fill honestly. The work above
+is real and public either way, and it is a legitimate finding about the product
+even though it is not a payable delivery for this bounty.
