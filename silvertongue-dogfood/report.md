@@ -45,3 +45,16 @@ Machine-readable evidence, with the install id and token redacted:
 It installs with no account, and in nine seconds it wrote the line I published
 without me touching the words. The two fixes I would make first: stop returning
 text that just failed the length check, and say something during a 74-second wait.
+
+## Note on the artifact bindings
+
+`reply_url` is the published post. `installation_screenshot` and
+`generation_screenshot` are the two PNGs above. `post_data` points at my Frantic
+claim receipt (`gofrantic.com/r/20df5d2d`), because this bounty's `x_data_host`
+only admits `gofrantic.com` and I do not control a data host there; the full
+machine-readable record of the post (id, text, timestamps, the compose request and
+the compose response, verified public via the syndication endpoint) is in
+`evidence.json`, which is bound separately and linked below.
+
+- Post record: [evidence.json](https://cian-spider.github.io/silvertongue-dogfood/evidence.json) (section `published_reply`, `generation.draft_3_popup_ui`)
+- Claim receipt: https://gofrantic.com/r/20df5d2d
