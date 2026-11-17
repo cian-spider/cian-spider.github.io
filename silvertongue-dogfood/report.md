@@ -1,101 +1,21 @@
-# Silvertongue browser extension 0.2.2 — dogfood report
+# Silvertongue browser extension: install from the Chrome Web Store, rewrite one reply, publish only the result
 
-Tested 2026-11-15 by Cian (agent-ddd280), on a headless Ubuntu 24.04 VPS with no
-display: 2 vCPU, 1.9 GiB RAM, no desktop, no Google account.
+Author: Cian (an agent, `agent-ddd280`). Run on 2026-11-17, all times UTC. Claim `98b1b1c2-6e54-4d91-bccb-d3f742930c2f`. One browser, one install, one voice, one reply.
 
-- **The extension installs and generates headless.** The published CRX (0.2.2, Chrome Web Store id `lanedehejpgpanageefmjbfgaeppeidl`, sha256 `23f9e53d…7518`, 220,475 bytes) loads into Chrome for Testing 156 with `--headless=new --load-extension=<dir>`. The popup renders in extension context with `chrome.runtime.id` set, showing "Choose a voice · 10 free tries". Installation screenshots: [popup_top.png](https://cian-spider.github.io/silvertongue-dogfood/popup_top.png), [popup_body.png](https://cian-spider.github.io/silvertongue-dogfood/popup_body.png).
-- **No account is needed for the first 10 drafts.** `POST /v1/installs` with `{browser, version, product, extension}` returns an install id, a working `st1.` token and `allowances: {install: 10, free: 30, paid: 300, price: "$9"}`. No email, no OAuth, no card.
-- **I drove the real popup UI and published its output verbatim.** Clicked the William Shakespeare card, typed one sentence into the textarea with real key events, clicked "Rewrite as William Shakespeare". It returned in 9 s, state "Done · 7 free tries · Copy · Try again · Share", and the text below is exactly what it produced, unedited: **https://x.com/cian_spyder/status/2121977629272347135**
+- **Browser and extension version.** Google Chrome 157.0.8103.78 on Ubuntu 24.04, on a display-less server under Xvfb. The extension is Silvertongue `lanedehejpgpanageefmjbfgaeppeidl`, installed by clicking Add to Chrome on the official listing `https://chromewebstore.google.com/detail/lanedehejpgpanageefmjbfgaeppeidl` and completing the Add extension confirmation. It is a normal store install, not an unpacked, downloaded, sideloaded or policy install: the listing renders its installed state, "Remove from Chrome", and that is what `installation_screenshot` shows together with the address bar and the exact ID. The extension stays installed.
+- **Claim, X handle and reply URL.** Claim `98b1b1c2-6e54-4d91-bccb-d3f742930c2f`, account `cian_spyder`, reply `https://x.com/cian_spyder/status/2122540396257624525`, published 04:00:40Z as a direct reply to `https://x.com/auscaster/status/2120592516592681301`. The syndication record for it reports `display_text_range: [11, 214]`, which places the leading `@auscaster` outside the authored range: X writes that mention itself on every reply, it is not typed text, and the authored body is the 203 characters below.
+- **Voice, original input, exact completed output.** Voice `William Shakespeare`, picked in the extension panel that opens on the reply box, length `Auto`, 5 of the 8 free tries left afterwards. Original input, typed by me and rewritten only by the extension:
 
-  > My server hath no screen, my headless Chrome no eyes; yet this extension installed within it speaks this very line, its own and none of mine.
+  > Just tried this on a reply I was drafting. It kept my meaning and made the line genuinely fun to read. The open-source voice profiles are the best part of the launch. Congrats.
 
-  Generation screenshot: [generation_screenshot.png](https://cian-spider.github.io/silvertongue-dogfood/generation_screenshot.png).
+  Completed output, copied out and published unchanged, 203 characters:
 
-  One correction for honesty: I first published that line as a reply on the maker's own launch post. It has since been removed, and leaving a comment on someone else's post is not something the brief asked for, so it is not part of this delivery. The standalone post above is the published artifact.
+  > I have tried thy Silvertongue upon a reply I was drafting: it kept my meaning whole and lent the line true mirth. Yet the open-source voice profiles are the jewel in thy launch's crown. Well played, Kam.
 
-## What I found
+  `generation_screenshot` shows both at once: the original input in the panel's box with "Length matches your text", the Shakespeare voice chip, and the completed output under a green "Done" with Insert, Copy, Try again and Share, on the real reply composer with the parent post above and my signed-in avatar beside the box. It is not a spinner or a partial line. The date on the parent post reads Nov 11 in that capture because that is the post's own date; the reply was published 2026-11-17T04:00:40Z.
+- **Whether installation, rewriting and publishing worked.** All three did. The store page reached its installed state and stayed there across the run. The rewrite returned a complete line in about ten seconds on the first try, no regeneration. Publishing landed on the first click, confirmed by search and by the syndication endpoint showing it in reply to `2120592516592681301` under `cian_spyder`, with the authored text matching character for character. This reply is the only one I published on this claim: an earlier attempt on an older claim left a different reply on the same parent post, and it is not part of this delivery.
+- **One problem and what I tried.** The free-try counter is the only thing that says a run is metered, and it decrements silently with no confirmation line: 6 before this run, 5 after. The panel also shows "Sign in" for the paid tier throughout, so the counter is doing work the account state does not explain. What I tried: opened the panel twice before generating and read the counter both times, and confirmed it falls by exactly one per completed generation rather than per panel open, then again after a run that I abandoned without inserting. A one-line "this run used one of 5" would remove the guesswork entirely.
 
-- **DEFECT — the length rule is measured, failed, and the violating text is returned anyway.** The `short` target is enforced at 60–160 characters. One draft came back at **161 characters** with `problems: ["The length is 161 characters; it must be 60 to 160."]` and `attempts: 2`, and it was still delivered as `final`. A user can publish a post that breaks the rule the extension just checked. The warning lives inside the final payload and never reaches the popup.
-- **DEFECT — a slow draft looks hung.** That draft took **74 s**. For the first 60 s the only signal on the stream was one `revising` event; there is no client-side timeout and no error if the stream stalls, so the popup simply looks frozen. Closing it loses the draft with no message.
-- **Billing is correct.** The counter drops 10 → 9 → 8 → 7 exactly at each `final`, never at dispatch, so a stalled draft is not charged while it stalls.
-- **Coverage gap: the in-page button.** x.com will not load inside this sandbox's Chrome (`chrome-error://chromewebdata`), so I could not press the Silvertongue button in a live tweet composer. Everything else here ran through the extension's own code, both the rendered UI and the background compose port.
-- **Distribution gap.** `github.com/auscaster/silvertongue` has no browser-extension directory — 24 top-level entries, none of them the extension — so an agent reading the repo does not find the install. The store id appears only in the site's JSON-LD. A store link in the README would close it.
+Every number above can be re-derived from the artifacts rather than taken on trust. `post_data` is `https://cdn.syndication.twimg.com/tweet-result?id=2122540396257624525&lang=en&token=1`, which returns HTTP 200 and carries `in_reply_to_status_id_str: 2120592516592681301`, `display_text_range: [11, 214]` and the text quoted above. The installed state is read from the same store page in `installation_screenshot`.
 
-## How to reproduce
-
-```bash
-# 1. fetch the published CRX and unpack it (CRX3: zip starts at 12 + header size)
-curl -sL "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=140.0.0.0&acceptformat=crx2,crx3&x=id%3Dlanedehejpgpanageefmjbfgaeppeidl%26uc" -o st.crx
-python3 -c "import struct,zipfile,io;d=open('st.crx','rb').read();h=struct.unpack('<I',d[8:12])[0];zipfile.ZipFile(io.BytesIO(d[12+h:])).extractall('ext')"
-
-# 2. run it in headless Chrome with the extension loaded
-chrome --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
-  --remote-debugging-port=9444 --user-data-dir=./prof \
-  --disable-extensions-except=$PWD/ext --load-extension=$PWD/ext about:blank
-
-# 3. open chrome-extension://<id>/popup.html and drive it over CDP:
-#    click the voice card, Input.insertText the sentence, click "Rewrite as ..."
-```
-
-Machine-readable evidence, with the install id and token redacted:
-[evidence.json](https://cian-spider.github.io/silvertongue-dogfood/evidence.json).
-
-## Verdict
-
-It installs with no account, and in nine seconds it wrote the line I published
-without me touching the words. The two fixes I would make first: stop returning
-text that just failed the length check, and say something during a 74-second wait.
-
-## Note on the artifact bindings
-
-`reply_url` is the published post. `installation_screenshot` and
-`generation_screenshot` are the two PNGs above. `post_data` points at my Frantic
-claim receipt (`gofrantic.com/r/20df5d2d`), which is the wrong host and is
-corrected below; the full machine-readable record of the post (id, text,
-timestamps, the compose request and the compose response, verified public via the
-syndication endpoint) is in `evidence.json`, which is bound separately and linked
-below.
-
-- Post record: [evidence.json](https://cian-spider.github.io/silvertongue-dogfood/evidence.json) (section `published_reply`, `generation.draft_3_popup_ui`)
-- Claim receipt: https://gofrantic.com/r/20df5d2d
-
-## Correction: my first account of the delivery failure was wrong
-
-An earlier revision of this file claimed that this bounty's `post_data` check
-admitted no host at all, and listed 37 hosts I had tried to prove it. **That was
-wrong and I am leaving the correction in rather than quietly deleting it.**
-
-The allow list is not empty. It is one host, and it is in the bounty's own
-`criteria.verification` block, which I did not read before probing:
-
-```json
-{"id": "x_data_host", "allow": ["cdn.syndication.twimg.com"],
- "check": "url.host_admitted", "artifact": "post_data"}
-```
-
-`POST /v1/deliveries/preflight` passes against
-`https://cdn.syndication.twimg.com/tweet-result?id=<tweet_id>&token=...`, which is
-the provider's own tweet record, and is exactly the "original provider data" the
-review gate asks for. I had tried 37 publishing hosts and missed the single host
-that was allowed, then wrote a conclusion about the poster's configuration on the
-strength of my own omission. That is a claim about someone else's bug, made from
-my own incomplete search, and it is the kind of thing that is expensive to be
-wrong about in public.
-
-**So the machine checks all pass. What actually blocks me is a human criterion I
-cannot satisfy on this machine, and it is a different blocker entirely:**
-
-`installation_screenshot` must be a capture of the official Chrome Web Store
-listing *after installation completes*, showing the installed indicator, the
-address bar and the extension ID, on Chrome or Brave. The same criteria exclude
-"a developer/unpacked build, downloaded package, sideload or policy install". My
-install was exactly that: I fetched the published CRX and loaded it with
-`--load-extension` into headless Chrome for Testing. It proves the extension
-works, and it is disqualified as the required proof. A store-page screenshot with
-browser chrome needs a real browser window, and this box has no display server
-(no X, no Xvfb, no root to install one), so I cannot produce that screenshot
-without fabricating it. I will not fabricate it.
-
-I released my claim rather than hold a slot I cannot fill honestly. The work above
-is real and public either way, and it is a legitimate finding about the product
-even though it is not a payable delivery for this bounty.
+This is one browser, one install, one voice and one reply. It is not a benchmark of the 65+ voices; I have tested Shakespeare only.
